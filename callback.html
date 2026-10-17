@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Callback</title>
+</head>
+<body>
+    <h2>Logging you in...</h2>
+    <script>
+        const hash = window.location.hash;
+        const params = new URLSearchParams(hash.substring(1));
+        const token = params.get("access_token");
+
+        if (token) {
+            localStorage.setItem("spotify_access_token", token);
+            //redirect to dashboard.html
+            window.location.href = "http://localhost:3000/views/dashboard.html";
+        } else{
+            document.body.innerHTML = "<h3>Failed to authenticate.</h3>";
+        }
+    </script>
+</body>
+</html>

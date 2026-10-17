@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"> -->
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/dash.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Plants -->
+    <img src="../assets/images/plants-left.png" class="plant left" />
+    <img src="../assets/images/plants-right.png" class="plant right" />
+
+    <!-- Header -->
+    <div class="header">
+      <img src="../assets/images/app-logo.png" class="icon" />
+      <h1>Welcome, Kriti!</h1>
+    </div>
+    <!-- Main Section -->
+    <div class="main">
+      <!-- Mood Playlist -->
+      <div class="section playlist">
+        <div class="section-header">
+          <!-- Spotify Login -->
+          <div class="spotify-login">
+            <button onclick="loginWithSpotify()">🎧 Login with Spotify</button>
+            <span id="spotifyPlanText" style="margin-left: 12px; font-size:0.9em; color:rgba(157, 82, 8, 0.281);"></span>
+          </div>
+          <div class="mood">
+            <img src="../assets/images/music.png" class="music-icon" />
+            <span>MOOD PLAYLIST</span>
+          </div>
+        </div>
+
+        <div class="playlist-cards">
+          <div class="card gradient-coding" data-mood="coding" onclick="openMoodPlaylist(this)">
+            <i class="fa-solid fa-laptop-code"></i>
+            <span>CODING</span>
+          </div>
+          <div class="card gradient-relax" data-mood="relax" onclick="openMoodPlaylist(this)">
+            <i class="fa-solid fa-spa"></i>
+            <span>RELAX</span>
+          </div>
+          <div class="card gradient-focus" data-mood="focus" onclick="openMoodPlaylist(this)">
+            <i class="fa-solid fa-brain"></i>
+            <span>FOCUS</span>
+          </div>
+          <div class="card gradient-calm" data-mood="calm" onclick="openMoodPlaylist(this)">
+            <i class="fa-solid fa-mug-hot"></i>
+            <span>CALM</span>
+          </div>
+          <div class="card add-mood" onclick="openAddMood()">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Mood</span>
+          </div>
+        </div>
+      </div>
+      <!--Mood Playlist Modal -->
+      <div id="moodPlaylistModal" class="modal modal-hidden">
+        <div class="mood-modal">
+          <img src="../assets/images/plant-btm.png" class="plant1 plant-top-right" alt="hanging-plant" />
+          <img src="../assets/images/plant-top.png" class="plant1 plant-bottom-left" alt="potted-plant" />
+
+          <div class="mood-flex">
+            <!-- LEFT: Album Image -->
+            <div class="album-cover">
+              <img id="albumArt" src="../assets/images/programmer.png" alt="Album Cover">
+            </div>
+            <!-- RIGHT: Mood Info and Songs -->
+            <div class="mood-right-content">
+              <div class="mood-header">
+                <img src="../assets/images/music.png" alt="icon" class="mood-icon" />
+                <h3 id="moodTitle">Mood: CODING</h3>
+              </div>
+              <div class="mood-actions">
+                <button class="play-btn" onclick="startNowPlaying()">▶ Play</button>
+                <button class="add-btn">➕ Add Songs</button>
+                <div id="addSongSection" style="display:none; margin-top: 12px;">
+                  <input type="text" id="newSongInput" placeholder="Enter new song ✨" style="padding: 8px; border-radius: 10px; border: 1px solid #ccc;" />
+                  <button onclick="submitNewSong()" style="margin-left: 8px; padding: 8px 14px; border-radius: 10px; background: #a86f4c; color: white; border: none; cursor: pointer;">
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul id="songList" class="popup-task-list mood-song-list"></ul>
+          <div class="modal-btn">
+            <button onclick="closeMoodPlaylist()">Close</button>
+          </div>
+        </div>
+      </div>
+      <!--Now Playing Modal-->
+      <div id="nowPlayingModal" class="modal modal-hidden">
+        <div class="now-playing-modal">
+          <img src="../assets/images/vines-top.png" class="plants1" />
+          <div class="now-playing-header">
+            <span id="nowPlayingMood" class="now-playing-mood">Mood:</span>
+            <div class="pomodoro-box">
+              <div id="pomodoroTime">25:00</div>
+              <button onclick="togglePomodoro()" id="pomoToggleBtn">⏱️ Start</button>
+            </div>
+          </div>
+
+          <div class="now-playing-album">
+            <img id="nowPlayingAlbumArt" src="../assets/images/placeholder.svg" alt="Album Art" />
+          </div>
+
+          <div id="nowPlayingSong" class="now-playing-song">Now Playing:</div>
+
+          <div class="player-card">
+            <div class="now-playing-controls">
+              <button onclick="prevSong()">⏮</button>
+              <button class="btn-play-big">▶</button>
+              <button onclick="nextSong()">⏭</button>
+            </div>
+          </div>
+
+          <div class="now-playing-footer">
+            <span> Rate this song: ❤️ 🤍 💖</span>
+          </div>
+
+          <div class="modal-btn">
+            <button onclick="closeNowPlaying()">Close</button>
+          </div>
+        </div>
+      </div>
+      <!-- To-Do List  -->
+      <div class="section todo">
+        <div class="to-do">
+            <h2>To-Do List</h2>
+        </div>
+        <div class="todo-input">
+            <input type="text" id="taskip" placeholder="Enter a new task!" />
+            <button id="addBtn" onclick="addTask()">Add the Task</button>
+        </div>
+        <ul class="todo-list" id="todoList">
+        <!-- <li>
+            <label class="todo-item">
+            <input type="checkbox" />
+            <span class="checkmark"></span>
+            <span class="task-text">Task 1</span>
+            </label>
+        </li> -->
+        </ul>
+        <div class="motivational-text">You’ve got this! ☕✨</div>
+      </div>
+
+      <!-- Calendar Section -->
+      <div class="section calendar-section">
+        <h2>Calendar View</h2>
+        <div id="calendar"></div>
+      </div>
+
+      <!-- ADD TASK Modal -->
+      <div class="modal modal-hidden" id="calendarModal">
+        <div class="modal-content">
+          <h3>ADD TASK FOR <span id="selectedDate"></span></h3>
+          <input type="text" id="calendarTaskInput" placeholder="Type your task..✨" />
+          <div class="modal-btns">
+            <button onclick="saveCalendarModalTask()">SAVE TASK</button>
+            <button onclick="closeCalendarModal()">CLOSE POP-UP</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK LIST POPUP Modal -->
+      <div class="modal modal-hidden" id="taskPopupModal">
+        <div class="modal-content">
+          <h3>Tasks for <span id="popupDateDisplay"></span></h3>
+          <ul id="popupTaskList" class="popup-task-list"></ul>
+          <input type="text" id="calendarTaskInputPopup" placeholder="Add another Task..✨" />
+          <div class="modal-btns">
+            <button onclick="addTaskToDateFromPopup()">ADD TASK</button>
+            <button onclick="closeTaskPopup()">CLOSE POP-UP</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT / DELETE Modal -->
+      <div class="modal modal-hidden" id="editDeleteModal">
+        <div class="modal-content">
+          <h3>EDIT or DELETE TASK</h3>
+          <input type="text" id="editTaskInput" />
+          <div class="modal-btns">
+            <button onclick="saveEditedTask()">SAVE TASK</button>
+            <button onclick="deleteTask()">DELETE TASK</button>
+            <button onclick="closeEditDeletePopup()">CANCEL TASK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <script src="../assets/js/dash-script.js"></script> 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="../assets/js/firebaseConfig.js"></script>
+</body>
+</html>

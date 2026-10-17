@@ -1,0 +1,2 @@
+client_id = 0adb861423b1485fb5c3bac7e346be9b;
+client_secret = 9cbbf8c2ee334a1489d88ca2455c0356;
