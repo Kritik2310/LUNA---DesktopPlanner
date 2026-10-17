@@ -8,8 +8,6 @@
 
 Luna is an Electron desktop app prototype that brings a personal to-do list, date-based task calendar, mood playlist mockups, and a Pomodoro timer into one plant-filled dashboard. The desktop window opens on a welcome screen; choose **LET’S PLAN!** to reach the dashboard.
 
-> [!NOTE]
-> This repository is an in-progress prototype. The local planner and interface are present, while cloud sync and Spotify connectivity need additional setup and implementation. See [Setup and integration status](#setup-and-integration-status) before relying on those integrations.
 
 ## Features
 
